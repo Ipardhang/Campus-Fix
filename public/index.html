@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f6f2" />
+    <title>CampusFix — Campus operations, made visible</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#top" aria-label="CampusFix home">
+          <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 17.2 13.2 24 27 9"/><path d="M16 4.5 26 8v7.1c0 6.3-4.3 10.8-10 12.4C10.3 25.9 6 21.4 6 15.1V8l10-3.5Z"/></svg></span>
+          <span>campus<span class="brand-light">fix</span></span>
+        </a>
+        <div class="sidebar-label">WORKSPACE</div>
+        <nav class="nav-list" aria-label="Main navigation">
+          <a class="nav-item active" href="#dashboard" data-nav="dashboard"><span class="nav-icon">▦</span> Overview <span class="nav-count" id="nav-open-count">—</span></a>
+          <a class="nav-item" href="#issues" data-nav="issues"><span class="nav-icon">☷</span> All requests</a>
+          <a class="nav-item" href="#new-request" data-nav="new-request"><span class="nav-icon">＋</span> Report an issue</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="sidebar-card">
+            <span class="sparkle">✳</span>
+            <strong>Better campus,<br />one fix at a time.</strong>
+            <p>Every report helps make our shared spaces work better.</p>
+          </div>
+          <button class="user-chip" id="profile-trigger" aria-expanded="false"><span class="avatar">AC</span><span class="user-copy"><strong>Campus admin</strong><span>Operations team</span></span><span class="more">···</span></button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="top">
+        <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumb-label">Overview</strong></div><div class="top-actions"><span class="today" id="today-label"></span><div class="menu-anchor"><button class="icon-button" id="notifications-button" aria-label="Notifications" aria-expanded="false">♧<i id="notification-dot"></i></button><div class="popover notification-popover" id="notifications-menu" hidden><div class="popover-heading"><strong>Notifications</strong><button class="mark-read" id="mark-read">Mark all read</button></div><div id="notification-list" class="notification-list"></div></div></div><div class="menu-anchor"><button class="avatar small avatar-trigger" id="top-profile-trigger" aria-label="Open profile menu" aria-expanded="false">AC</button><div class="popover profile-popover" id="profile-menu" hidden><div class="profile-summary"><div class="avatar">AC</div><div><strong>Campus admin</strong><span>Operations team</span></div></div><button class="menu-option" id="profile-refresh">↻ &nbsp; Refresh workspace</button><button class="menu-option" id="profile-status">● &nbsp; Check system status</button></div></div></div></header>
+        <div class="content-wrap" id="dashboard">
+          <section class="welcome-row">
+            <div><div class="eyebrow"><span class="live-dot"></span> CAMPUS OPERATIONS</div><h1>Good evening, Aditya <span class="wave">✦</span></h1><p class="subheading">Here’s what’s happening across your campus today.</p></div>
+            <a href="#new-request" class="primary-button"><span>＋</span> Report an issue</a>
+          </section>
+
+          <section class="stats-grid" aria-label="Issue summary">
+            <article class="stat-card clickable-stat" data-status="Open" role="button" tabindex="0" aria-label="Filter open requests"><div class="stat-top"><span class="stat-label">Open requests</span><span class="stat-icon yellow">◷</span></div><div class="stat-value" id="open-total">—</div><div class="stat-foot"><span class="tiny-dot amber"></span><span>Needs attention</span></div><div class="stat-decoration decoration-amber"></div></article>
+            <article class="stat-card clickable-stat" data-status="In Progress" role="button" tabindex="0" aria-label="Filter requests in progress"><div class="stat-top"><span class="stat-label">In progress</span><span class="stat-icon blue">↗</span></div><div class="stat-value" id="progress-total">—</div><div class="stat-foot"><span class="tiny-dot blue-dot"></span><span>Being worked on</span></div><div class="stat-decoration decoration-blue"></div></article>
+            <article class="stat-card clickable-stat" data-status="Resolved" role="button" tabindex="0" aria-label="Filter resolved requests"><div class="stat-top"><span class="stat-label">Resolved</span><span class="stat-icon green">✓</span></div><div class="stat-value" id="resolved-total">—</div><div class="stat-foot"><span class="tiny-dot green-dot"></span><span>Fixed for campus</span></div><div class="stat-decoration decoration-green"></div></article>
+            <article class="stat-card response-card"><div class="stat-top"><span class="stat-label">Campus pulse</span><span class="stat-icon violet">✳</span></div><div class="pulse-line"><div class="pulse-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="pulse-score" id="pulse-score">Checking</span></div><div class="stat-foot"><span>Service status</span><span class="service-pill" id="service-pill"><i></i> Checking services</span></div></article>
+          </section>
+
+          <section class="workspace-grid">
+            <div class="panel issues-panel" id="issues">
+              <div class="panel-heading"><div><div class="panel-title-row"><h2>Recent requests</h2><span class="count-pill" id="issue-count">0</span></div><p>Keep track of what needs fixing around campus.</p></div><button class="text-button" id="refresh-button">Refresh <span>↻</span></button></div>
+              <div class="filters" role="tablist" aria-label="Filter requests">
+                <button class="filter active" data-filter="All" role="tab" aria-selected="true">All requests <span id="all-filter-count">0</span></button>
+                <button class="filter" data-filter="Open" role="tab" aria-selected="false">Open</button>
+                <button class="filter" data-filter="In Progress" role="tab" aria-selected="false">In progress</button>
+                <button class="filter" data-filter="Resolved" role="tab" aria-selected="false">Resolved</button>
+              </div>
+              <div class="list-tools"><label class="search-box"><span>⌕</span><input type="search" id="issue-search" placeholder="Search requests…" aria-label="Search requests" /></label><select id="category-filter" aria-label="Filter by category"><option value="All">All categories</option><option>Internet</option><option>Classroom</option><option>Facilities</option><option>Safety</option><option>Other</option></select><select id="sort-order" aria-label="Sort requests"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="priority">Priority first</option></select><button class="export-button" id="export-button">Export CSV <span>↓</span></button></div>
+              <div class="issue-list" id="issue-list" aria-live="polite"><div class="loading-state">Loading campus requests…</div></div>
+              <div class="panel-footer"><span id="showing-label">Showing 0 requests</span><span class="secure-note"><span class="tiny-lock">▣</span> Campus operations workspace</span></div>
+            </div>
+
+            <aside class="right-column">
+              <div class="panel report-panel" id="new-request">
+                <div class="panel-heading compact"><div><div class="form-kicker"><span>✳</span> HELP US IMPROVE</div><h2>Report an issue</h2><p>Tell us what needs attention.</p></div></div>
+                <form id="issue-form">
+                  <label for="title">What’s the issue?</label><input id="title" name="title" maxlength="100" placeholder="e.g. Wi-Fi not working" required />
+                  <div class="form-row"><div><label for="category">Category</label><select id="category" name="category" required><option value="" disabled selected>Select one</option><option>Internet</option><option>Classroom</option><option>Facilities</option><option>Safety</option><option>Other</option></select></div><div><label for="priority">Priority</label><select id="priority" name="priority"><option>Low</option><option selected>Medium</option><option>High</option></select></div></div>
+                  <label for="location">Where is it?</label><input id="location" name="location" maxlength="100" placeholder="Building, room, or area" required />
+                  <label for="description">A few details</label><textarea id="description" name="description" maxlength="500" rows="3" placeholder="What happened? Anything that could help us fix it?" required></textarea>
+                  <div class="form-bottom"><span class="private-note">⌑ &nbsp;Shared with campus operations</span><button class="submit-button" type="submit">Send report <span>↗</span></button></div>
+                  <p class="form-message" id="form-message" role="status"></p>
+                </form>
+              </div>
+              <div class="tip-card"><div class="tip-icon">✦</div><div><strong>Quick tip</strong><p>Add a specific room or building so the right team can find the issue faster.</p></div><button aria-label="Dismiss tip" id="dismiss-tip">×</button></div>
+            </aside>
+          </section>
+          <footer class="page-footer"><span>CampusFix <span class="footer-dot">·</span> Campus service desk</span><span><span class="footer-dot">●</span> Connected to campus operations</span></footer>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>
